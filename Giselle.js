@@ -106,7 +106,6 @@ try {
 
 	var testGiselleAssignmentLine = new RegExp('^'+regAnySpace+storage+regSpace+'('+command+regAnySpace+'('+next+regAnySpace+command+regAnySpace+'){,}){,1}'+regAnySpace+'{,}'+'$');
 	var testGiselleActivityLine = new RegExp('^'+regAnySpace+command+regAnySpace+'$');
-	var testEmptyLine = new RegExp('^'+regAnySpace+'$');
 
 	var currentScope = 0;
 	var parametersDegree = 0;
@@ -203,10 +202,6 @@ try {
 
 			code[i] += ';';
 
-		} else if (ifEmpty == true){
-
-			var theDev = false;
-			continue;
 		} else {
 			theDev = false;
 			throw new Error('Phrasing Error: line ' + (i+1) + ' is not understandable.\nPlease check the phrasing in:\n' + lines[i].toString());
