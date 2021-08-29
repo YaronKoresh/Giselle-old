@@ -87,30 +87,219 @@ try {
 	}
 
 	var inter='Internal Error: Please report a bug to the developer, with the following details: ';
-
-	var regVariableName = '([a-zA-Z_]{1})([a-zA-Z0-9_]{,})' ;
-	var regSpace = '([\s]{1,})' ;
-	var regAnySpace = '([\s]{,})' ;
-	var regLoop = '(loop)' + '(' + regSpace + '([0-9]{1,})' + regSpace + '(times)' + '{,1})' ;
-	var regCommands = '([(say)|(break)|(closed)|(' + regLoop + ')]{1})' ;
-	var regBy = '((by)' + regSpace + '([a-zA-Z]{1,}){1})' ;
-	var regProp = '([(size)|(parent)|(node)|(item)|(html)|(script)|(document)]{1})' ;
-	var regKeys = '([(window)|(current)|(empty)|(newline)]{1})' ;
-	var regText = '([(text)]{1})' + '([(' + regSpace + '([\S]{1,})' + ')]{1,})' + regSpace + '([as]{1})([(one)|(some)|(number)|(boolean)|(object)]{1})' ;
-	var regStorage = regVariableName + '([('  + '([(' + regSpace + '([(will)]{1})' + regSpace + '([(gain)|(store)|(lose)|(do)]{1})' + ')]{1})|([(' + regSpace + '([(is)]{1})([(like)|(not)]{1})' + ')]{1})' + ')]{1})' ;
-	var regData = '([(' + regBy + ')|(' + regText + ')|(' + regKeys + ')]{1})' ;
-	var regFullCommand = '([(' + regCommands + ')|(' + regData + ')]{1})' ;
-	var regStorage = '([(' + regStorage + ')|(' + regData + ')]{1})' ;
-	var regNext = '([(also)|(with)|(without)]{1})' ;
-
-	var regAssignment = '([(' + regAnySpace + regStorage + regAnySpace + '([(' + regSpace + regFullCommand + '([(' regSpace + regNext + regAnySpace + regFullCommand + ')]{,}) + ')]{,1})' + regAnySpace + ')]{,})' ;
-	var regActivity = '([(' + regAnySpace + regFullCommand + regAnySpace + ')]{1})' ;
-
 	var currentScope = 0;
 	var parametersDegree = 0;
 	var code = [];
 	var innerModes = ['operand','operation'];
-	var reg = new RegExp('^([(' + regAssignment + ')|(' + regActivity + ')]{1})$');
+
+	var regOpen = '([(';
+	var regOr = '|'
+	var regCloseAny = ')]{,})';
+	var regCloseOne = ')]{1})';
+	var regCloseOneOrZero = ')]{,1})';
+	var regCloseOneOrMore = ')]{1,})';
+
+	var regAnySpace = \
+		regOpen + 
+			'[[\s]]' + 
+		regCloseAny ;
+
+	var regSpace = \
+		regOpen + 
+			'[[\s]]' + 
+		regCloseOneOrMore ;
+
+	var regVariableName = \
+		regOpen + 
+			'[a-zA-Z_]' + 
+		regCloseOne + 
+		regOpen + 
+			'[a-zA-Z0-9_]' + 
+		regCloseAny ;
+
+	var regLoop = \
+		regOpen + 
+			'[(loop)]' + 
+		regCloseOne + 
+		regOpen + 
+			regOpen + 
+				regSpace + 
+				'[0-9]' + 
+			regCloseOneOrMore + 
+			regOpen + 
+				regSpace + 
+				'[(times)]' + 
+			regCloseOne + 
+		regCloseOneOrZero ;
+
+	var regCommands = \
+		regOpen + 
+			regOpen + 
+				'[(say)]' + 
+			regCloseOne + 
+			regOr + 
+			regOpen + 
+				'[(break)]' + 
+			regCloseOne + 
+			regOr + 
+			regOpen + 
+				'[(closed)]' + 
+			regCloseOne + 
+			regOr + 
+			regOpen + 
+				regLoop + 
+			regCloseOne + 
+		regCloseOne ;
+
+	var regBy = \
+		regOpen + 
+			'[(by)]' + 
+			regSpace + 
+			regOpen + 
+				'[a-zA-Z]' + 
+			regCloseOneOrMore + 
+		regCloseOne ;
+
+	var regKeys = \
+		regOpen + 
+			regOpen + 
+				'[(window)]' + 
+			regCloseOne + 
+			regOpen + 
+				'[(current)]' + 
+			regCloseOne + 
+			regOpen + 
+				'[(empty)]' + 
+			regCloseOne + 
+			regOpen + 
+				'[(newline)]' + 
+			regCloseOne + 
+		regCloseOne ;
+
+	var regText = \
+		regOpen + 
+			regOpen + 
+				'[(text)]' + 
+			regCloseOne + 
+			regOpen + 
+				regSpace + 
+				regOpen + 
+					'[[\S]]' + 
+				regCloseOneOrMore + 
+			regCloseOneOrMore + 
+			regSpace + 
+			regOpen + 
+				'[(as)]' + 
+			regCloseOne + 
+			regOpen + 
+				'[(one)]' + 
+				regOr + 
+				'[(some)]' + 
+				regOr + 
+				'[(number)]' 
+				+ regOr + 
+				'[(boolean)]' + 
+				regOr + 
+				'[(object)]' + 
+			regCloseOne + 
+		regCloseOneOrMore ;
+
+	var regStorage = \
+		regOpen +
+			regVariableName + 
+			regOpen +
+				regSpace + 
+				'[(will)]' + 
+				regSpace +
+				regOpen + 
+					'[(store)]' + 
+					regOr + 
+					'[(gain)]' + 
+					regOr + 
+					'[(lose)]' + 
+					regOr + 
+					'[(do)]' + 
+				regCloseOne +
+			regCloseOne +
+			regOr +
+			regOpen +
+				regSpace + 
+				'[(is)]' + 
+				regSpace +
+				regOpen + 
+					'[(like)]' + 
+					regOr + 
+					'[(not)]' + 
+				regCloseOne +
+			regCloseOne +
+		regCloseOne ;
+
+	var regData = \
+		regOpen +
+			regBy +
+			regOr + 
+			regText +
+			regOr + 
+			regKeys +
+		regCloseOne ;
+
+	var regFullCommand = \
+		regOpen +
+			regCommands +
+			regOr +
+			regData +
+		regCloseOne ;
+
+	var regFullStorage = \
+		regOpen +
+			regStorage +
+			regOr +
+			regData +
+		regCloseOne ;
+
+	var regNext = \
+		regOpen +
+			'[(also)]' +
+			regOr +
+			'[(with)]' +
+			regOr +
+			'[(without)]' +
+		regCloseOne ;
+
+	var regAssignment = \
+		regOpen +
+			regAnySpace + 
+			regFullStorage + 
+			regAnySpace + 
+			regOpen + 
+				regSpace + 
+				regFullCommand + 
+				regOpen + 
+					regAnySpace + 
+					regNext + 
+					regAnySpace + 
+					regFullCommand +
+				regCloseAny + 
+			regCloseOneOrZero + 
+			regAnySpace +
+		regCloseOne ;
+
+
+	var regActivity = \
+		regOpen +
+			regAnySpace + 
+			regFullCommand + 
+			regAnySpace + 
+		regCloseOne ;
+
+	var regTester = \
+		regOpen +
+			regAssignment + 
+			regOr + 
+			regActivity + 
+		regCloseOne ;
+
+	var reg = new RegExp('^' + regTester + '$');
 
 } catch(exception) {
 
