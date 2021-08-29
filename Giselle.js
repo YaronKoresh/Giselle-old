@@ -319,7 +319,7 @@ try {
 
 		var lastWord = "";
 
-		if (ifGiselle == true){
+		if (ifGiselle){
 
 			theDev = false;
 
