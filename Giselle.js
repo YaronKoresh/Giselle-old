@@ -15,7 +15,7 @@ try {
 
 		if (arg1){
 
-			if (arg2 == /^(\*)(.){1,}$/ ){
+			if (arg2 == /^([\*]{1})([.]{1,})$/){
 
 				theDev = false;
 				throw new Error('Error in line ' + (i+1) + ': ' + arg2.toString().substring(1) + '.');
@@ -23,7 +23,7 @@ try {
 				return arg2;
 			}
 		} else {
-			if (arg3 == /^(\*)(.){1,}$/ ){
+			if (arg3 == /^([\*]{1})([.]{1,})$/){
 
 				theDev = false;
 				throw new Error('Error in line ' + (i+1) + ': ' + arg3.toString().substring(1) + '.');
@@ -51,7 +51,7 @@ try {
 
 		if (currentMode == 'operation'){
 
-			if (arg1 == /^(\*)(.){1,}$/){
+			if (arg1 == /^([\*]{1})([.]{1,})$/){
 
 				theDev = false;
 				throw new Error('Error in line ' + (i+1) + ': ' + arg1.toString().substring(1) + '.');
@@ -65,7 +65,7 @@ try {
 
 		} else if (currentMode == 'operand'){
 
-			if (arg2 == /^(\*)(.){1,}$/){
+			if (arg2 == /^([\*]{1})([.]{1,})$/){
 
 				theDev = false;
 				throw new Error('Error in line ' + (i+1) + ': ' + arg2.toString().substring(1) + '.');
@@ -87,11 +87,30 @@ try {
 	}
 
 	var inter='Internal Error: Please report a bug to the developer, with the following details: ';
+
+	var regVariableName = '([a-zA-Z_]{1})([a-zA-Z0-9_]{,})' ;
+	var regSpace = '([\s]{1,})' ;
+	var regAnySpace = '([\s]{,})' ;
+	var regLoop = '(loop)' + '(' + regSpace + '([0-9]{1,})' + regSpace + '(times)' + '{,1})' ;
+	var regCommands = '([(say)|(break)|(closed)|(' + regLoop + ')]{1})' ;
+	var regBy = '((by)' + regSpace + '([a-zA-Z]{1,}){1})' ;
+	var regProp = '([(size)|(parent)|(node)|(item)|(html)|(script)|(document)]{1})' ;
+	var regKeys = '([(window)|(current)|(empty)|(newline)]{1})' ;
+	var regText = '([(text)]{1})' + '([(' + regSpace + '([\S]{1,})' + ')]{1,})' + regSpace + '([as]{1})([(one)|(some)|(number)|(boolean)|(object)]{1})' ;
+	var regStorage = regVariableName + '([('  + '([(' + regSpace + '([(will)]{1})' + regSpace + '([(gain)|(store)|(lose)|(do)]{1})' + ')]{1})|([(' + regSpace + '([(is)]{1})([(like)|(not)]{1})' + ')]{1})' + ')]{1})' ;
+	var regData = '([(' + regBy + ')|(' + regText + ')|(' + regKeys + ')]{1})' ;
+	var regFullCommand = '([(' + regCommands + ')|(' + regData + ')]{1})' ;
+	var regStorage = '([(' + regStorage + ')|(' + regData + ')]{1})' ;
+	var regNext = '([(also)|(with)|(without)]{1})' ;
+
+	var regAssignment = '([(' + regAnySpace + regStorage + regAnySpace + '([(' + regSpace + regFullCommand + '([(' regSpace + regNext + regAnySpace + regFullCommand + ')]{,}) + ')]{,1})' + regAnySpace + ')]{,})' ;
+	var regActivity = '([(' + regAnySpace + regFullCommand + regAnySpace + ')]{1})' ;
+
 	var currentScope = 0;
 	var parametersDegree = 0;
 	var code = [];
 	var innerModes = ['operand','operation'];
-	var tester = new RegExp('^([\s]){,}(([a-zA-Z_])(a-zA-Z0-9_){,}((([\s]){1,}(will)([\s]){1,}(gain|store|lose|do))|(([\s]){1,}(is)([\s]){1,}(like|not)))|(by)([\s]){1,}(a-zA-Z){1,}|(text)(([\s]){1,}([\S]){1,}){1,}([\s]){1,}(as)([\s]){1,}(one|some|number|boolean|object)|(window|current|empty|newline)|([\s]){1,}){1,}([\s]){,}(((say|break|closed|(loop)(([\s]){1,}([0-9]){1,}([\s]){1,}(times)){,1})|(by)([\s]){1,}(a-zA-Z){1,}|(text)(([\s]){1,}([\S]){1,}){1,}([\s]){1,}(as)([\s]){1,}(one|some|number|boolean|object)|(window|current|empty|newline)|([\s]){1,}){1,}([\s]){,}(((also|with|without)|([\s]){1,}){1,}([\s]){,}((say|break|closed|(loop)(([\s]){1,}([0-9]){1,}([\s]){1,}(times)){,1})|(by)([\s]){1,}(a-zA-Z){1,}|(text)(([\s]){1,}([\S]){1,}){1,}([\s]){1,}(as)([\s]){1,}(one|some|number|boolean|object)|(window|current|empty|newline)|([\s]){1,}){1,}([\s]){,}){,}){,1}([\s]){,}$|^([\s]){,}((say|break|closed|(loop)(([\s]){1,}([0-9]){1,}([\s]){1,}(times)){,1})|(by)([\s]){1,}(a-zA-Z){1,}|(text)(([\s]){1,}([\S]){1,}){1,}([\s]){1,}(as)([\s]){1,}(one|some|number|boolean|object)|(window|current|empty|newline)|([\s]){1,}){1,}([\s]){,}$');
+	var reg = new RegExp('^([(' + regAssignment + ')|(' + regActivity + ')]{1})$');
 
 } catch(exception) {
 
@@ -105,7 +124,7 @@ try {
 
 		theDev = true;
 
-		var ifGiselle = tester.test(lines[i]);
+		var ifGiselle = reg.test(lines[i]);
 
 		var currentMode = innerModes[0];
 
