@@ -99,17 +99,17 @@ try {
 	var regCloseOneOrZero = ')]{,1})';
 	var regCloseOneOrMore = ')]{1,})';
 
-	var regAnySpace = \
+	var regAnySpace = ''+
 		regOpen + 
 			'[[\s]]' + 
 		regCloseAny ;
 
-	var regSpace = \
+	var regSpace = ''+
 		regOpen + 
 			'[[\s]]' + 
 		regCloseOneOrMore ;
 
-	var regVariableName = \
+	var regVariableName = ''+
 		regOpen + 
 			'[a-zA-Z_]' + 
 		regCloseOne + 
@@ -117,7 +117,7 @@ try {
 			'[a-zA-Z0-9_]' + 
 		regCloseAny ;
 
-	var regLoop = \
+	var regLoop = ''+
 		regOpen + 
 			'[(loop)]' + 
 		regCloseOne + 
@@ -132,7 +132,7 @@ try {
 			regCloseOne + 
 		regCloseOneOrZero ;
 
-	var regCommands = \
+	var regCommands = ''+
 		regOpen + 
 			regOpen + 
 				'[(say)]' + 
@@ -151,7 +151,7 @@ try {
 			regCloseOne + 
 		regCloseOne ;
 
-	var regBy = \
+	var regBy = ''+
 		regOpen + 
 			'[(by)]' + 
 			regSpace + 
@@ -160,7 +160,7 @@ try {
 			regCloseOneOrMore + 
 		regCloseOne ;
 
-	var regKeys = \
+	var regKeys = ''+
 		regOpen + 
 			regOpen + 
 				'[(window)]' + 
@@ -176,7 +176,7 @@ try {
 			regCloseOne + 
 		regCloseOne ;
 
-	var regText = \
+	var regText = ''+
 		regOpen + 
 			regOpen + 
 				'[(text)]' + 
@@ -204,7 +204,7 @@ try {
 			regCloseOne + 
 		regCloseOneOrMore ;
 
-	var regStorage = \
+	var regStorage = ''+
 		regOpen +
 			regVariableName + 
 			regOpen +
@@ -234,7 +234,7 @@ try {
 			regCloseOne +
 		regCloseOne ;
 
-	var regData = \
+	var regData = ''+
 		regOpen +
 			regBy +
 			regOr + 
@@ -243,21 +243,21 @@ try {
 			regKeys +
 		regCloseOne ;
 
-	var regFullCommand = \
+	var regFullCommand = ''+
 		regOpen +
 			regCommands +
 			regOr +
 			regData +
 		regCloseOne ;
 
-	var regFullStorage = \
+	var regFullStorage = ''+
 		regOpen +
 			regStorage +
 			regOr +
 			regData +
 		regCloseOne ;
 
-	var regNext = \
+	var regNext = ''+
 		regOpen +
 			'[(also)]' +
 			regOr +
@@ -266,7 +266,7 @@ try {
 			'[(without)]' +
 		regCloseOne ;
 
-	var regAssignment = \
+	var regAssignment = ''+
 		regOpen +
 			regAnySpace + 
 			regFullStorage + 
@@ -285,14 +285,14 @@ try {
 		regCloseOne ;
 
 
-	var regActivity = \
+	var regActivity = ''+
 		regOpen +
 			regAnySpace + 
 			regFullCommand + 
 			regAnySpace + 
 		regCloseOne ;
 
-	var regTester = \
+	var regTester = ''+
 		regOpen +
 			regAssignment + 
 			regOr + 
