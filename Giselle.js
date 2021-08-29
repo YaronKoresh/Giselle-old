@@ -87,30 +87,11 @@ try {
 	}
 
 	var inter='Internal Error: Please report a bug to the developer, with the following details: ';
-
-	var regVariableName='([a-zA-Z_])(a-zA-Z0-9_){,}';
-	var regSpace='([\s]){1,}';
-	var regAnySpace='([\s]){,}';
-	var regLoop='(loop)'+'('+regSpace+'([0-9]){1,}'+regSpace+'(times)'+'){,1}';
-	var regCommands='(say|break|closed|' + regLoop + ')';
-	var regBy='(by)'+regSpace+'(a-zA-Z){1,}';
-	var regProp='(size|parent|node|item|html|script|document)';
-	var regKeys='(window|current|empty|newline)';
-	var regData='(text)'+'('+regSpace+'([\S]){1,}'+'){1,}'+regSpace+'(as)(one|some|number|boolean|object)';
-	var regStorage=regVariableName+'('+'('+regSpace+'(will)'+regSpace+'(gain|store|lose|do)'+')|('+regSpace+'(is)(like|not)'+')'+')';
-
-	var data=regBy+'|'+regData+'|'+regKeys;
-	var command='('+regCommands+'|'+data+'){1,}';
-	var storage='('+regStorage+'|'+data+'){1,}';
-	var next='(also|with|without)';
-
-	var testGiselleAssignmentLine = new RegExp('^'+regAnySpace+storage+regSpace+'('+command+regAnySpace+'('+next+regAnySpace+command+regAnySpace+'){,}){,1}'+regAnySpace+'{,}'+'$');
-	var testGiselleActivityLine = new RegExp('^'+regAnySpace+command+regAnySpace+'$');
-
 	var currentScope = 0;
 	var parametersDegree = 0;
 	var code = [];
 	var innerModes = ['operand','operation'];
+	var tester = new RegExp('^([\s]){,}(([a-zA-Z_])(a-zA-Z0-9_){,}((([\s]){1,}(will)([\s]){1,}(gain|store|lose|do))|(([\s]){1,}(is)([\s]){1,}(like|not)))|(by)([\s]){1,}(a-zA-Z){1,}|(text)(([\s]){1,}([\S]){1,}){1,}([\s]){1,}(as)([\s]){1,}(one|some|number|boolean|object)|(window|current|empty|newline)|([\s]){1,}){1,}([\s]){,}(((say|break|closed|(loop)(([\s]){1,}([0-9]){1,}([\s]){1,}(times)){,1})|(by)([\s]){1,}(a-zA-Z){1,}|(text)(([\s]){1,}([\S]){1,}){1,}([\s]){1,}(as)([\s]){1,}(one|some|number|boolean|object)|(window|current|empty|newline)|([\s]){1,}){1,}([\s]){,}(((also|with|without)|([\s]){1,}){1,}([\s]){,}((say|break|closed|(loop)(([\s]){1,}([0-9]){1,}([\s]){1,}(times)){,1})|(by)([\s]){1,}(a-zA-Z){1,}|(text)(([\s]){1,}([\S]){1,}){1,}([\s]){1,}(as)([\s]){1,}(one|some|number|boolean|object)|(window|current|empty|newline)|([\s]){1,}){1,}([\s]){,}){,}){,1}([\s]){,}$|^([\s]){,}((say|break|closed|(loop)(([\s]){1,}([0-9]){1,}([\s]){1,}(times)){,1})|(by)([\s]){1,}(a-zA-Z){1,}|(text)(([\s]){1,}([\S]){1,}){1,}([\s]){1,}(as)([\s]){1,}(one|some|number|boolean|object)|(window|current|empty|newline)|([\s]){1,}){1,}([\s]){,}$');
 
 } catch(exception) {
 
@@ -118,20 +99,19 @@ try {
 } try {
 	var theDev = false;
 
-	var lines = document.currentScript.getAttribute("code").replaceAll('\n\n','\n').split('\n');
+	var lines = document.currentScript.getAttribute("code").split('\n');
 
 	for (var i = 0 ; i < lines.length ; i++){
 
 		theDev = true;
 
-		var ifAssignment = testGiselleAssignmentLine.test(lines[i]);
-		var ifActivity = testGiselleActivityLine.test(lines[i]);
-		var ifEmpty = testEmptyLine.test(lines[i]);
+		var ifGiselle = tester.test(lines[i]);
 
 		var currentMode = innerModes[0];
+
 		var lastWord = "";
 
-		if (ifAssignment == true || ifActivity == true){
+		if (ifGiselle == true){
 
 			theDev = false;
 
@@ -178,10 +158,13 @@ try {
 				word == 'also' && Giselle(Dependent('currentScope>0',';','*please start a new line in your code, instead of using "also" keyword'),'also',2,0) || 
 				word == 'closed' && Giselle(Dependent('parametersDegree==0',';}',')'),'closed',2,-1) && Dependent('parametersDegree>0',DegreeDown(),'') || 
 				word == 'do' && Giselle(Dependent('lastWord==will',Dependent('parametersDegree==0','=> {','*you can not create a function as a parameter. Instead, please define the function in a seperate line in your code, then, call it as a parameter'),'*unknown command gain. You may forgot using "will"'),'do',2,1) || 
+				word == 'is' && Giselle('','is',2,0) || 
+				word == 'like' && Giselle(Dependent('lastWord=="is"','==','*unknown command like. You may forgot using "is"'),'like',2,0) || 
+				word == 'not' && Giselle(Dependent('lastWord=="is"','!=','*unknown command not. You may forgot using "is"'),'not',2,0) || 
 				word == 'will' && Giselle('','will',2,0) || 
-				word == 'gain' && Giselle(Dependent('lastWord==will','+=','*unknown command gain. You may forgot using "will"'),'gain',2,0) || 
-				word == 'lose' && Giselle(Dependent('lastWord==will','-=','*unknown command gain. You may forgot using "will"'),'lose',2,0) || 
-				word == 'store' && Giselle(Dependent('lastWord==will','=','*unknown command gain. You may forgot using "will"'),'store',2,0) || 
+				word == 'gain' && Giselle(Dependent('lastWord=="will"','+=','*unknown command gain. You may forgot using "will"'),'gain',2,0) || 
+				word == 'lose' && Giselle(Dependent('lastWord=="will"','-=','*unknown command gain. You may forgot using "will"'),'lose',2,0) || 
+				word == 'store' && Giselle(Dependent('lastWord=="will"','=','*unknown command gain. You may forgot using "will"'),'store',2,0) || 
 				word == '/^([a-zA-Z_]){1}([a-zA-Z0-9_]){,}$/' && Giselle(Dependent('nextWord=="will"','var ' + word,Dependent('lastWord=="loop"',word,'*unknown command "' + word + '"')),'"' + word + '"',2,0,Dependent('lastWord=="by"',"-+","++")) || 
 				Giselle(Dependent('nextWord=="will"','*storage name could not be used by JS: ' + word,'*unknown command "' + word + '"'),'"' + word.replaceAll("\'","\\\'").replaceAll("\"","\\\"") + '"',2,0,Dependent('lastWord=="by"',"-+","++")) ;
 
