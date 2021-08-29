@@ -92,12 +92,12 @@ try {
 	var code = [];
 	var innerModes = ['operand','operation'];
 
-	var regOpen = '([(';
-	var regOr = '|'
-	var regCloseAny = ')]{,})';
-	var regCloseOne = ')]{1})';
-	var regCloseOneOrZero = ')]{,1})';
-	var regCloseOneOrMore = ')]{1,})';
+	var regOpen = '(';
+	var regOr = '|';
+	var regCloseAny = '){,}';
+	var regCloseOne = '){1}';
+	var regCloseOneOrZero = '){,1}';
+	var regCloseOneOrMore = '){1,}';
 
 	var regAnySpace = ''+
 		regOpen + 
