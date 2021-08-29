@@ -341,7 +341,7 @@ try {
 
 		var lastWord = "";
 
-		if (true){
+		if (ifGiselle){
 
 			theDev = false;
 
