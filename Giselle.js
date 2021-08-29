@@ -111,15 +111,20 @@ try {
 
 	var regVariableName = ''+
 		regOpen + 
-			'[a-zA-Z_]' + 
-		regCloseOne + 
-		regOpen + 
-			'[a-zA-Z0-9_]' + 
-		regCloseAny ;
+			regAnySpace +
+			regOpen + 
+				'[a-zA-Z_]' + 
+			regCloseOne + 
+			regOpen + 
+				'[a-zA-Z0-9_]' + 
+			regCloseAny +
+			regAnySpace +
+		regCloseOne ;
 
 	var regLoop = ''+
 		regOpen + 
-			'[(loop)]' + 
+			regAnySpace +
+			'loop' + 
 		regCloseOne + 
 		regOpen + 
 			regOpen + 
@@ -128,58 +133,66 @@ try {
 			regCloseOneOrMore + 
 			regOpen + 
 				regSpace + 
-				'[(times)]' + 
+				'times' + 
 			regCloseOne + 
+			regAnySpace +
 		regCloseOneOrZero ;
 
 	var regCommands = ''+
 		regOpen + 
+			regAnySpace +
 			regOpen + 
-				'[(say)]' + 
+				'say' + 
 			regCloseOne + 
 			regOr + 
 			regOpen + 
-				'[(break)]' + 
+				'break' + 
 			regCloseOne + 
 			regOr + 
 			regOpen + 
-				'[(closed)]' + 
+				'closed' + 
 			regCloseOne + 
 			regOr + 
 			regOpen + 
 				regLoop + 
 			regCloseOne + 
+			regAnySpace +
 		regCloseOne ;
 
 	var regBy = ''+
 		regOpen + 
-			'[(by)]' + 
+			regAnySpace +
+			'by' + 
 			regSpace + 
 			regOpen + 
 				'[a-zA-Z]' + 
 			regCloseOneOrMore + 
+			regAnySpace +
 		regCloseOne ;
 
 	var regKeys = ''+
 		regOpen + 
+			regAnySpace +
 			regOpen + 
-				'[(window)]' + 
-			regCloseOne + 
+				'window' + 
+			regCloseOneOrZero + 
 			regOpen + 
-				'[(current)]' + 
-			regCloseOne + 
+				'current' + 
+			regCloseOneOrZero + 
 			regOpen + 
-				'[(empty)]' + 
-			regCloseOne + 
+				'empty' + 
+			regCloseOneOrZero + 
 			regOpen + 
-				'[(newline)]' + 
-			regCloseOne + 
+				'newline' + 
+			regCloseOneOrZero + 
+			regAnySpace +
 		regCloseOne ;
 
 	var regText = ''+
 		regOpen + 
 			regOpen + 
-				'[(text)]' + 
+				regAnySpace +
+				'text' + 
 			regCloseOne + 
 			regOpen + 
 				regSpace + 
@@ -189,49 +202,54 @@ try {
 			regCloseOneOrMore + 
 			regSpace + 
 			regOpen + 
-				'[(as)]' + 
+				regAnySpace +
+				'as' + 
 			regCloseOne + 
+			regSpace +
 			regOpen + 
-				'[(one)]' + 
+				'one' + 
 				regOr + 
-				'[(some)]' + 
+				'some' + 
 				regOr + 
-				'[(number)]' 
-				+ regOr + 
-				'[(boolean)]' + 
+				'number'+ 
 				regOr + 
-				'[(object)]' + 
+				'boolean' + 
+				regOr + 
+				'object' + 
 			regCloseOne + 
+			regAnySpace +
 		regCloseOneOrMore ;
 
 	var regStorage = ''+
 		regOpen +
+			regAnySpace +
 			regVariableName + 
 			regOpen +
 				regSpace + 
-				'[(will)]' + 
+				'will' + 
 				regSpace +
 				regOpen + 
-					'[(store)]' + 
+					'store' + 
 					regOr + 
-					'[(gain)]' + 
+					'gain' + 
 					regOr + 
-					'[(lose)]' + 
+					'lose' + 
 					regOr + 
-					'[(do)]' + 
+					'do' + 
 				regCloseOne +
 			regCloseOne +
 			regOr +
 			regOpen +
 				regSpace + 
-				'[(is)]' + 
+				'is' + 
 				regSpace +
 				regOpen + 
-					'[(like)]' + 
+					'like' + 
 					regOr + 
-					'[(not)]' + 
+					'not' + 
 				regCloseOne +
 			regCloseOne +
+			regAnySpace +
 		regCloseOne ;
 
 	var regData = ''+
@@ -248,22 +266,26 @@ try {
 			regCommands +
 			regOr +
 			regData +
-		regCloseOne ;
+		regCloseOneOrMore ;
 
 	var regFullStorage = ''+
 		regOpen +
 			regStorage +
 			regOr +
 			regData +
-		regCloseOne ;
+		regCloseOneOrMore ;
 
 	var regNext = ''+
 		regOpen +
-			'[(also)]' +
-			regOr +
-			'[(with)]' +
-			regOr +
-			'[(without)]' +
+			regAnySpace +
+			regOpen +
+				'also' +
+				regOr +
+				'with' +
+				regOr +
+				'without' +
+			regCloseOne +
+			regAnySpace +
 		regCloseOne ;
 
 	var regAssignment = ''+
