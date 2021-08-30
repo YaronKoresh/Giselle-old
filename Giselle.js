@@ -399,8 +399,8 @@ try {
 				(found == false) && (word == 'object') && Giselle(Dependent('lastWord=="as"','[@].ForEach(Object(this))','*unknown command "object"'),'\"object\"',2,0)  ;
 				(found == false) && (word == 'say') && Giselle('alert','say',2,0) && DegreeUp()  ;
 				(found == false) && (word == 'with') && Giselle(')&&(','with',2,0);
-				(found == false) && (word == 'without') && Giselle(')&&(_$AMP$_=true);(_$AMP$_==false)&&(','without',2,0);
-				(found == false) && (word == 'also') && Giselle(Dependent('currentScope>0',';','*please start a new line in your code, instead of using "also" keyword'),'also',2,0) && (_$AMP$_ = false);
+				(found == false) && (word == 'without') && Giselle(')&&(_$I$F$_=true);(_$I$F$_==false)&&(','without',2,0);
+				(found == false) && (word == 'also') && Giselle(Dependent('currentScope>0',';','*please start a new line in your code, instead of using "also" keyword'),'also',2,0) && (_$I$F$_ = false);
 				(found == false) && (word == 'do') && Giselle(Dependent('lastWord==will',Dependent('parametersDegree==0','=> {','*you can not create a function as a parameter. Instead, please define the function in a seperate line in your code, then, call it as a parameter'),'*unknown command gain. You may forgot using "will"'),'do',2,1);
 				(found == false) && (word == 'is') && Giselle('','is',2,0) ;
 				(found == false) && (word == 'like') && Giselle(Dependent('lastWord=="is"','==','*unknown command like. You may forgot using "is"'),'like',2,0) ;
@@ -409,8 +409,8 @@ try {
 				(found == false) && (word == 'gain') && Giselle(Dependent('lastWord=="will"','+=','*unknown command gain. You may forgot using "will"'),'gain',2,0);
 				(found == false) && (word == 'lose') && Giselle(Dependent('lastWord=="will"','-=','*unknown command gain. You may forgot using "will"'),'lose',2,0);
 				(found == false) && (word == 'store') && Giselle(Dependent('lastWord=="will"','=','*unknown command gain. You may forgot using "will"'),'store',2,0);
-				(found == false) && (word == /^([a-zA-Z_]){1}([a-zA-Z0-9_]){,}$/) && (Giselle(Dependent('nextWord=="will"','var ' + word,Dependent('lastWord=="loop"',word,'*unknown command "' + word + '"')),'\"' + word + '\"',2,0,Dependent('lastWord=="by"',"-+","++"))) && (found = true) ;
-				(found == false) && (Giselle(Dependent('nextWord=="will"','*storage name could not be used by JS: ' + word,'*unknown command "' + word + '"'),'"' + word.replaceAll("\'","\\\'").replaceAll("\"","\\\"") + '"',2,0,Dependent('lastWord=="by"',"-+","++")));
+				(found == false) && (word == /^([a-zA-Z_]){1}([a-zA-Z0-9_]){,}$/) && Giselle(Dependent('nextWord=="will"','var ' + word,Dependent('lastWord=="loop"',word,'*unknown command "' + word + '"')),'\"' + word + '\"',2,0,Dependent('lastWord=="by"',"-+","++")) && (found = true) ;
+				(found == false) && Giselle(Dependent('nextWord=="will"','*storage name could not be used by JS: ' + word,'*unknown command "' + word + '"'),'"' + word.replaceAll("\'","\\\'").replaceAll("\"","\\\"") + '"',2,0,Dependent('lastWord=="by"',"-+","++"));
 
 				lastWord = word;
 			}
@@ -429,7 +429,7 @@ try {
 				code[i] += ';}';
 			}
 
-			code[i] += ');';
+			code[i] += ');_$I$F$_=false;';
 
 		} else {
 			theDev = false;
