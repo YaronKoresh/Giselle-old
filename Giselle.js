@@ -54,8 +54,6 @@ try {
 			arg5 = "++";
 		}
 
-		alert(arg1 + " ; " + arg2 + " ; " + arg3 + " ; " + arg4 + " ; " + arg5); //
-
 		if (currentMode == 'operation'){
 
 			if (arg1 == /^(\*){1}(.){1,}$/ ){
