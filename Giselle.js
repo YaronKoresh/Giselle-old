@@ -15,7 +15,7 @@ try {
 
 		if (arg1){
 
-			if (arg2 == /^([\*]{1})([.]{1,})$/){
+			if (arg2 == /^(\*){1}(.){1,}$/ ){
 
 				theDev = false;
 				throw new Error('Error in line ' + (i+1) + ': ' + arg2.toString().substring(1) + '.');
@@ -23,7 +23,7 @@ try {
 				return arg2;
 			}
 		} else {
-			if (arg3 == /^([\*]{1})([.]{1,})$/){
+			if (arg3 == /^(\*){1}(.){1,}$/ ){
 
 				theDev = false;
 				throw new Error('Error in line ' + (i+1) + ': ' + arg3.toString().substring(1) + '.');
@@ -47,11 +47,16 @@ try {
 		currentScope++;
 	}
 
-	function Giselle(arg1,arg2,arg3,arg4,arg5 = "++"){
+	function Giselle(arg1,arg2,arg3,arg4,arg5){
+
+		if (arg5==""){
+
+			arg5 = "++";
+		}
 
 		if (currentMode == 'operation'){
 
-			if (arg1 == /^([\*]{1})([.]{1,})$/){
+			if (arg1 == /^(\*){1}(.){1,}$/ ){
 
 				theDev = false;
 				throw new Error('Error in line ' + (i+1) + ': ' + arg1.toString().substring(1) + '.');
@@ -65,7 +70,7 @@ try {
 
 		} else if (currentMode == 'operand'){
 
-			if (arg2 == /^([\*]{1})([.]{1,})$/){
+			if (arg2 == /^(\*){1}(.){1,}$/ ){
 
 				theDev = false;
 				throw new Error('Error in line ' + (i+1) + ': ' + arg2.toString().substring(1) + '.');
@@ -357,7 +362,7 @@ try {
 
 				theDev = true;
 
-				word == '/^=([^ \f\n\r\t\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]){1,}$/' && Giselle('*unknown command "' + word + '"',word.substring(1).replaceAll("\'","\\\'").replaceAll("\"","\\\""),2,0) || 
+				word == '/^(=){1}([^ \f\n\r\t\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]){1,}$/' && Giselle('*unknown command "' + word + '"',word.substring(1).replaceAll("\'","\\\'").replaceAll("\"","\\\""),2,0) || 
 				word == 'loop' && Giselle(Dependent('nextWord==\'/([0-9]){1,}/\' && words[j+2]=="times"',Dependent('parametersDegree==0',Looper(nextWord),'*could not create a loop as a parameter. Please create the loop in a seperate line of code'),Dependent('parametersDegree==0',Looper(true),'*could not create a loop as a parameter. Please create the loop in a seperate line of code')),'\"loop\"',2,0) || 
 				word == 'times' && Giselle(Dependent('words[j-2]==loop','','*unknown command "times"'),'\"times\"',2,0) || 
 				word == 'not' && Giselle(Dependent('lastWord=="is"','','*unknown command not. You may forgot using "is"'),'not',2,0) || 
@@ -424,11 +429,11 @@ try {
 
 } catch(exception) {
 
-	if (theDev == false){
+	if (!(theDev)){
 
 		alert(exception.message);
 
-	} else if (theDev == true){
+	} else if (theDev){
 
 		alert(inter + exception.message);
 	}
