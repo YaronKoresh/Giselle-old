@@ -104,6 +104,7 @@ try {
 	var nextWord = "";
 	var lastWord = "";
 	var word = "";
+	var found = false;
 
 	var regOpen = '(';
 	var regOr = '|';
@@ -354,7 +355,7 @@ try {
 
 		lastWord = "";
 
-		if (true){ //reg.test(lines[i])
+		if (reg.test(lines[i])){ 
 
 			theDev = false;
 
@@ -400,7 +401,7 @@ try {
 				(found == false) && (word == 'say') && Giselle('alert','say',2,0) && DegreeUp()  ;
 				(found == false) && (word == 'with') && Giselle(')&&(','with',2,0);
 				(found == false) && (word == 'without') && Giselle(')&&(_$I$F$_=true);(_$I$F$_==false)&&(','without',2,0);
-				(found == false) && (word == 'also') && Giselle(Dependent('currentScope>0',';','*please start a new line in your code, instead of using "also" keyword'),'also',2,0) && (_$I$F$_ = false);
+				(found == false) && (word == 'also') && Giselle(Dependent('currentScope>0',');(_$I$F$_ = false);(','*please start a new line in your code, instead of using "also" keyword'),'also',2,0);
 				(found == false) && (word == 'do') && Giselle(Dependent('lastWord==will',Dependent('parametersDegree==0','=> {','*you can not create a function as a parameter. Instead, please define the function in a seperate line in your code, then, call it as a parameter'),'*unknown command gain. You may forgot using "will"'),'do',2,1);
 				(found == false) && (word == 'is') && Giselle('','is',2,0) ;
 				(found == false) && (word == 'like') && Giselle(Dependent('lastWord=="is"','==','*unknown command like. You may forgot using "is"'),'like',2,0) ;
@@ -416,8 +417,6 @@ try {
 			}
 
 			theDev = true;
-
-			if (cond==true){
 
 			for (var j = 0 ; j < parametersDegree ; parametersDegree--){
 
@@ -435,7 +434,7 @@ try {
 			theDev = false;
 			throw new Error('Phrasing Error: line ' + (i+1) + ' is not understandable.\nPlease check the phrasing in:\n' + lines[i].toString());
 		}
-		var theDev = false;
+		theDev = false;
 	}	
 
 } catch(exception) {
