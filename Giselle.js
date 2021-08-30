@@ -343,7 +343,7 @@ try {
 } try {
 	var theDev = false;
 
-	var lines = document.currentScript.getAttribute("code").replaceAll('\n\n','').replaceAll(/^\n/,'').replaceAll(/\n$/,'').split('\n');
+	var lines = document.currentScript.getAttribute("code").replaceAll('\n\n','').replaceAll(/^\n/g,'').replaceAll(/\n$/g,'').split('\n');
 
 	for (var i = 0 ; i < lines.length ; i++){
 
