@@ -7,8 +7,10 @@ Giselle: JS based programming language. Could be added to HTML, to ease the JS d
 # How to add Giselle to my HTML page?
 *add the following code:*<br>
 ```
-<script src="Giselle.js" code='(...)
+<script src='Giselle.js' code='
 (...)
 (...)
-(...)'></script>
+(...)
+(...)
+'></script>
 ```
