@@ -119,12 +119,13 @@ export default function Giselle(arg) {
 					nextWord = words[j + 1] || '';
 					word = words[j];
 					theDev = true;
-					(word == /^(=){1}([^ \f\n\r\t\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]){1,}$/) && (Giselle('*unknown command "' + word + '"', '"' + word.substring(1).replaceAll('\'', '\\\'').replaceAll('"', '\\"') + '"', 2, 0)) && (found = true);
-					(found == false) && (word == 'loop') && (Giselle(Dependent('nextWord==\'/([0-9]){1,}/\' && words[j+2]=="times"', Dependent('parametersDegree==0', Looper(nextWord), '*could not create a loop as a parameter. Please create the loop in a seperate line of code'), Dependent('parametersDegree==0', Looper(true), '*could not create a loop as a parameter. Please create the loop in a seperate line of code')), '"loop"', 2, 0)) && (found = true);
+					(word == 'loop') && (Giselle(Dependent('nextWord==\'/([0-9]){1,}/\' && words[j+2]=="times"', Dependent('parametersDegree==0', Looper(nextWord), '*could not create a loop as a parameter. Please create the loop in a seperate line of code'), Dependent('parametersDegree==0', Looper(true), '*could not create a loop as a parameter. Please create the loop in a seperate line of code')), '"loop"', 2, 0)) && (found = true);
 					(found == false) && (word == 'times') && (Giselle(Dependent('words[j-2]=="loop"', '', '*unknown command "times"'), '"times"', 2, 0)) && (found = true);
 					(found == false) && (word == 'not') && (Giselle(Dependent('lastWord=="is"', '', '*unknown command not. You may forgot using "is"'), 'not', 2, 0)) && (found = true);
-					(found == false) && (word == '=') && (Giselle('*unknown command "="', '" "', 2, 0, '+-')) && (found = true);
+					(found == false) && (word == /^(~){1}$/) && (Giselle('*unknown command "~"', '\" \"', 2, 0, '+-')) && (found = true);
+					(found == false) && (word == /^(~){2,}$/) && (Giselle('*unknown command ' + word.substring(1), word.substring(1), 2, 0, '++')) && (found = true);
 					(found == false) && (word == 'by') && (Giselle('.', '"by"', 2, 0, '-+')) && (found = true);
+					(found == false) && (word == 'sql') && (Giselle('require("sqlite3").Database("/GiselleDB").run', '"sql"', 2, 0, '++') && DegreeUp()) && (found = true);
 					(found == false) && (word == 'size') && (Giselle(Dependent('lastWord=="by"', 'length', '*unknown command "size"'), '"size"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'parent') && (Giselle(Dependent('lastWord=="by"', 'parentNode', '*unknown command "parent"'), '"parent"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'break') && (Giselle('break', '"break"', 2, 0)) && (found = true);
@@ -135,6 +136,7 @@ export default function Giselle(arg) {
 					(found == false) && (word == 'script') && (Giselle(Dependent('lastWord=="by"', 'currentScript', '*unknown command "script"'), '"script"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'document') && (Giselle(Dependent('lastWord=="by"', 'document', '*unknown command "document"'), '"document"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'window') && (Giselle('window', '"window"', 2, 0)) && (found = true);
+					(found == false) && (word == 'link') && (Giselle(Dependent('lastWord=="by"', 'open', '*unknown command "link"'), '"link"', 2, 0) && DegreeUp()) && (found = true);
 					(found == false) && (word == 'current') && (Giselle('this', '"this"', 2, 0, Dependent('lastWord=="by"', '-+', '++'))) && (found = true);
 					(found == false) && (word == 'newline') && (Giselle('*unknown command "newline"', '\n', 2, 0, '+-')) && (found = true);
 					(found == false) && (word == 'text') && (Giselle('[""', 'text', 0, 0)) && (found = true);
@@ -157,7 +159,7 @@ export default function Giselle(arg) {
 					(found == false) && (word == 'lose') && (Giselle(Dependent('lastWord=="will"', '-=', '*unknown command gain. You may forgot using "will"'), 'lose', 2, 0)) && (found = true);
 					(found == false) && (word == 'store') && (Giselle(Dependent('lastWord=="will"', '=', '*unknown command gain. You may forgot using "will"'), 'store', 2, 0)) && (found = true);
 					(found == false) && (word == /^([a-zA-Z_]){1}([a-zA-Z0-9_]){,}$/) && (Giselle(Dependent('nextWord=="will"', 'var ' + word, Dependent('lastWord=="loop"', word, '*unknown command "' + word + '"')), '"' + word + '"', 2, 0, Dependent('lastWord=="by"', '-+', '++'))) && (found = true);
-					(found == false) && (Giselle(Dependent('nextWord=="will"', '*storage name could not be used by JS: ' + word, '*unknown command "' + word + '"'), '"' + word.replaceAll('\'', '\\\'').replaceAll('"', '\\"') + '"', 2, 0, Dependent('lastWord=="by"', '-+', '++')));
+					(found == false) && (word == /^([^ \f\n\r\t\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]){1,}$/) && (Giselle(Dependent('nextWord=="will"', '*storage name could not be used by JS: ' + word, '*unknown command "' + word + '"'), '"' + word.replaceAll('\'', '\\\'').replaceAll('"', '\\"').replaceAll('\'', '\\\'') + '"', 2, 0, Dependent('lastWord=="by"', '-+', '++')));
 					lastWord = word;
 				}
 				theDev = true;
