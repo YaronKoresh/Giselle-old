@@ -132,7 +132,7 @@ export default function Giselle(allCode) {
 					(found == false) && (word == 'parent') && (GiselleCalc(Dependent('lastWord=="by"', 'parentNode', '*unknown command "parent"'), '"parent"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'break') && (GiselleCalc('break', '"break"', 2, 0)) && (found = true);
 					(found == false) && (word == 'node') && (GiselleCalc(Dependent('lastWord=="by"', 'nodeType', '*unknown command "size"'), '"node"', 2, 0, '-+')) && (found = true);
-					(found == false) && (word == 'inner') && (GiselleCalc(Dependent('lastWord=="by"', 'innerHTML', '*unknown command "inner"'), '"inner"', 2, 0, '-+')) && (found = true);
+					(found == false) && (word == 'inside') && (GiselleCalc(Dependent('lastWord=="by"', 'innerHTML', '*unknown command "inside"'), '"inside"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'script') && (GiselleCalc(Dependent('lastWord=="by"', 'currentScript', '*unknown command "script"'), '"script"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'document') && (GiselleCalc(Dependent('lastWord=="by"', 'document', '*unknown command "document"'), '"document"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'window') && (GiselleCalc('window', '"window"', 2, 0)) && (found = true);
