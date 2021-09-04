@@ -125,8 +125,7 @@ export default function Giselle(allCode) {
 					(word == 'loop') && (GiselleCalc(Dependent('words[j+2]=="times"', Dependent('parametersDegree==0', Looper(nextWord), '*could not create a loop as a parameter. Please create the loop in a seperate line of code'), Dependent('parametersDegree==0', Looper(true), '*could not create a loop as a parameter. Please create the loop in a seperate line of code')), '"loop"', 2, 0)) && (found = true);
 					(found == false) && (word == 'times') && (GiselleCalc(Dependent('words[j-2]=="loop"', '', '*unknown command "times"'), '"times"', 2, 0)) && (found = true);
 					(found == false) && (word == 'not') && (GiselleCalc(Dependent('lastWord=="is"', '', '*unknown command not. You may forgot using "is"'), 'not', 2, 0)) && (found = true);
-					(found == false) && (word == /^(~){1}$/) && (GiselleCalc('*unknown command "~"', '\" \"', 2, 0, '+-')) && (found = true);
-					(found == false) && (word == /^(~){1}([^ \f\n\r\t\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]){1,}$/) && (GiselleCalc('*unknown command ' + word.substring(1), word.substring(1), 2, 0, '++')) && (found = true);
+					(found == false) && (word == /^(~){1}([^ \f\n\r\t\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]){1,}$/) && (GiselleCalc('*unknown command ' + word.substring(1), word.substring(1), 2, 0, '+-')) && (found = true);
 					(found == false) && (word == 'by') && (GiselleCalc('.', '"by"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'sql') && (GiselleCalc('require("sqlite3").Database("/GiselleDB").run', '"sql"', 2, 0, '++') && DegreeUp()) && (found = true);
 					(found == false) && (word == 'size') && (GiselleCalc(Dependent('lastWord=="by"', 'length', '*unknown command "size"'), '"size"', 2, 0, '-+')) && (found = true);
@@ -142,6 +141,7 @@ export default function Giselle(allCode) {
 					(found == false) && (word == 'current') && (GiselleCalc('this', '"this"', 2, 0, Dependent('lastWord=="by"', '-+', '++'))) && (found = true);
 					(found == false) && (word == 'newline') && (GiselleCalc('*unknown command "newline"', '\n', 2, 0, '+-')) && (found = true);
 					(found == false) && (word == 'tab') && (GiselleCalc('*unknown command "tab"', '\t', 2, 0, '+-')) && (found = true);
+					(found == false) && (word == 'space') && (GiselleCalc('*unknown command "space"', '" "', 2, 0, '+-')) && (found = true);
 					(found == false) && (word == 'text') && (GiselleCalc('[""', 'text', 0, 0)) && (found = true);
           				(found == false) && (word == 'in') && (GiselleCalc('[', '\"in\"', 2, 0,'-+')) && (arrayNow = true) && (found = true);
 					(found == false) && (word == 'as') && (GiselleCalc('*unknown command "as"', '', 1, 0)) && (found = true);
