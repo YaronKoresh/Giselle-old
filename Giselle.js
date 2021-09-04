@@ -160,7 +160,9 @@ export default function Giselle(allCode) {
 					(found == false) && (word == 'do') && (GiselleCalc(Dependent('lastWord==will', Dependent('parametersDegree==0', '=> {', '*you can not create a function as a parameter. Instead, please define the function in a seperate line in your code, then, call it as a parameter'), '*unknown command gain. You may forgot using "will"'), 'do', 2, 1)) && (found = true);
 					(found == false) && (word == 'is') && (GiselleCalc('', 'is', 2, 0)) && (found = true);
 					(found == false) && (word == 'like') && (GiselleCalc(Dependent('lastWord=="is"', '==', '*unknown command like. You may forgot using "is"'), 'like', 2, 0)) && (found = true);
-					(found == false) && (word == 'not') && (GiselleCalc(Dependent('lastWord=="is"', '!=', '*unknown command not. You may forgot using "is"'), 'not', 2, 0)) && (found = true);
+					(found == false) && (word == 'not') && (GiselleCalc(Dependent('lastWord=="is"', '!=', '*unknown command "not". You may forgot using "is"'), 'not', 2, 0)) && (found = true);
+					(found == false) && (word == 'over') && (GiselleCalc(Dependent('lastWord=="is"', '>', '*unknown command "over". You may forgot using "is"'), 'over', 2, 0)) && (found = true);
+					(found == false) && (word == 'under') && (GiselleCalc(Dependent('lastWord=="is"', '<', '*unknown command "under". You may forgot using "is"'), 'under', 2, 0)) && (found = true);
 					(found == false) && (word == 'will') && (GiselleCalc('', 'will', 2, 0)) && (found = true);
 					(found == false) && (word == 'gain') && (GiselleCalc(Dependent('lastWord=="will"', '+=', '*unknown command gain. You may forgot using "will"'), 'gain', 2, 0)) && (found = true);
 					(found == false) && (word == 'lose') && (GiselleCalc(Dependent('lastWord=="will"', '-=', '*unknown command gain. You may forgot using "will"'), 'lose', 2, 0)) && (found = true);
