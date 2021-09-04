@@ -132,7 +132,6 @@ export default function Giselle(allCode) {
 					(found == false) && (word == 'size') && (GiselleCalc(Dependent('lastWord=="by"', 'length', '*unknown command "size"'), '"size"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'parent') && (GiselleCalc(Dependent('lastWord=="by"', 'parentNode', '*unknown command "parent"'), '"parent"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'break') && (GiselleCalc('break', '"break"', 2, 0)) && (found = true);
-					(found == false) && (word == 'empty') && (GiselleCalc('""', '"empty"', 2, 0)) && (found = true);
 					(found == false) && (word == 'node') && (GiselleCalc(Dependent('lastWord=="by"', 'nodeType', '*unknown command "size"'), '"node"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'item') && (GiselleCalc(Dependent('lastWord=="by"', 'item', '*unknown command "item"'), '"item"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'html') && (GiselleCalc(Dependent('lastWord=="by"', 'innerHTML', '*unknown command "html"'), '"html"', 2, 0, '-+')) && (found = true);
@@ -142,6 +141,7 @@ export default function Giselle(allCode) {
 					(found == false) && (word == 'link') && (GiselleCalc(Dependent('lastWord=="by"', 'open', '*unknown command "link"'), '"link"', 2, 0) && DegreeUp()) && (found = true);
 					(found == false) && (word == 'current') && (GiselleCalc('this', '"this"', 2, 0, Dependent('lastWord=="by"', '-+', '++'))) && (found = true);
 					(found == false) && (word == 'newline') && (GiselleCalc('*unknown command "newline"', '\n', 2, 0, '+-')) && (found = true);
+					(found == false) && (word == 'tab') && (GiselleCalc('*unknown command "tab"', '\t', 2, 0, '+-')) && (found = true);
 					(found == false) && (word == 'text') && (GiselleCalc('[""', 'text', 0, 0)) && (found = true);
           				(found == false) && (word == 'in') && (GiselleCalc('[', '\"in\"', 2, 0,'-+')) && (arrayNow = true) && (found = true);
 					(found == false) && (word == 'as') && (GiselleCalc('*unknown command "as"', '', 1, 0)) && (found = true);
