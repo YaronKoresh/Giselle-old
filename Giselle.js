@@ -126,7 +126,7 @@ export default function Giselle(allCode) {
 					(found == false) && (word == 'times') && (GiselleCalc(Dependent('words[j-2]=="loop"', '', '*unknown command "times"'), '"times"', 2, 0)) && (found = true);
 					(found == false) && (word == 'not') && (GiselleCalc(Dependent('lastWord=="is"', '', '*unknown command not. You may forgot using "is"'), 'not', 2, 0)) && (found = true);
 					(found == false) && (word == /^(~){1}$/) && (GiselleCalc('*unknown command "~"', '\" \"', 2, 0, '+-')) && (found = true);
-					(found == false) && (word == /^(~){2,}$/) && (GiselleCalc('*unknown command ' + word.substring(1), word.substring(1), 2, 0, '++')) && (found = true);
+					(found == false) && (word == /^(~){1}([^ \f\n\r\t\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]){1,}$/) && (GiselleCalc('*unknown command ' + word.substring(1), word.substring(1), 2, 0, '++')) && (found = true);
 					(found == false) && (word == 'by') && (GiselleCalc('.', '"by"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'sql') && (GiselleCalc('require("sqlite3").Database("/GiselleDB").run', '"sql"', 2, 0, '++') && DegreeUp()) && (found = true);
 					(found == false) && (word == 'size') && (GiselleCalc(Dependent('lastWord=="by"', 'length', '*unknown command "size"'), '"size"', 2, 0, '-+')) && (found = true);
