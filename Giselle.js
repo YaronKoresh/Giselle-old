@@ -143,13 +143,13 @@ export default function Giselle(allCode) {
 					(found == false) && (word == 'current') && (GiselleCalc('this', '"this"', 2, 0, Dependent('lastWord=="by"', '-+', '++'))) && (found = true);
 					(found == false) && (word == 'newline') && (GiselleCalc('*unknown command "newline"', '\n', 2, 0, '+-')) && (found = true);
 					(found == false) && (word == 'text') && (GiselleCalc('[""', 'text', 0, 0)) && (found = true);
-          (found == false) && (word == 'in') && (GiselleCalc('[', '\"in\"', 2, 0,'-+')) && (arrayNow = true) && (found = true);
+          				(found == false) && (word == 'in') && (GiselleCalc('[', '\"in\"', 2, 0,'-+')) && (arrayNow = true) && (found = true);
 					(found == false) && (word == 'as') && (GiselleCalc('*unknown command "as"', '', 1, 0)) && (found = true);
 					(found == false) && (word == 'one') && (GiselleCalc(Dependent('lastWord=="as"', '].join("")', '*unknown command "one"'), '"one"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'some') && (GiselleCalc(Dependent('lastWord=="as"', ']', '*unknown command "some"'), '"some"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'number') && (GiselleCalc(Dependent('lastWord=="as"', '].forEach(_$D$A$T$A$_ => parseInt(_$D$A$T$A$_))', '*unknown command "number"'), '"number"', 2, 0, '-+')) && Dependent('arrayNow=="true"', 'code[i] += "]"','') && (arrayNow = false) && (found = true);
 					(found == false) && (word == 'boolean') && (GiselleCalc(Dependent('lastWord=="as"', '].forEach(_$D$A$T$A$_ => this === _$D$A$T$A$_)', '*unknown command "boolean"'), '"boolean"', 2, 0, '-+')) && (found = true);
-					(found == false) && (word == 'object') && (GiselleCalc(Dependent('lastWord=="as"', '].join("").forEach(_$D$A$T$A$_ => new Function(_$D$A$T$A$_))', '*unknown command "object"'), '"object"', 2, 0, '-+')) && (found = true);
+					(found == false) && (word == 'object') && (GiselleCalc(Dependent('lastWord=="as"', '].join("").forEach(_$D$A$T$A$_ => _$D$A$T$A$_)', '*unknown command "object"'), '"object"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'say') && (GiselleCalc('\"alert\"', '\"say\"', 2, 0) && DegreeUp()) && (found = true);
 					(found == false) && (word == 'with') && (GiselleCalc(')&&(', 'with', 2, 0)) && (found = true);
 					(found == false) && (word == 'without') && (GiselleCalc(')&&(_$I$F$_=true);(_$I$F$_==false)&&(', 'without', 2, 0)) && (found = true);
