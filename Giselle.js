@@ -92,7 +92,7 @@ export default function Giselle(allCode) {
 	var regSpace = regOpen + regOpen + ' ' + regOr + '\t' + regCloseOne + regCloseOneOrMore;
 	var regVariableName = regOpen + regAnySpace + regOpen + '[a-zA-Z_]' + regCloseOne + regOpen + '[a-zA-Z0-9_]' + regCloseAny + regAnySpace + regCloseOne;
 	var regLoop = regOpen + regAnySpace + 'loop' + regCloseOne + regOpen + regSpace + regOpen + '[0-9]' + regCloseOneOrMore + regOr + regOpen + regVariableName + regCloseOne + regOpen + regSpace + 'times' + regCloseOne + regAnySpace + regCloseOneOrZero;
-	var regCommands = regOpen + regAnySpace + regOpen + regOpen + 'say' + regCloseOne + regOr + regOpen + 'sql' + regCloseOne + regOr + regOpen + 'break' + regCloseOne + regOr + regOpen + regLoop + regCloseOne + regCloseOne + regAnySpace + regCloseOne;
+	var regCommands = regOpen + regAnySpace + regOpen + regOpen + 'say' + regCloseOne + regOr + regOpen + 'identifier' + regCloseOne + regOr + regOpen + 'element' + regCloseOne + regOr + regOpen + 'sql' + regCloseOne + regOr + regOpen + 'break' + regCloseOne + regOr + regOpen + regLoop + regCloseOne + regCloseOne + regAnySpace + regCloseOne;
 	var regBy = regOpen + regAnySpace + 'by' + regSpace + regOpen + '[a-zA-Z]' + regCloseOneOrMore + regAnySpace + regCloseOne;
   var regKeys = regOpen + regAnySpace + regOpen + 'window' + regCloseOneOrZero + regOpen + 'current' + regCloseOneOrZero + regOpen + 'empty' + regCloseOneOrZero + regOpen + 'newline' + regCloseOneOrZero + regAnySpace + regCloseOne;
 	var regText = regOpen + regOpen + regAnySpace + 'text' + regCloseOne + regOpen + regSpace + regOpen + '[^ \f\n\r\t\x0B\xA0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]' + regCloseOneOrMore + regCloseOneOrMore + regSpace + regOpen + regAnySpace + 'as' + regCloseOne + regSpace + regOpen + 'one' + regOr + 'some' + regOr + 'number' + regOr + 'boolean' + regOr + 'object' + regCloseOne + regAnySpace + regCloseOneOrMore;
@@ -132,7 +132,6 @@ export default function Giselle(allCode) {
 					(found == false) && (word == 'parent') && (GiselleCalc(Dependent('lastWord=="by"', 'parentNode', '*unknown command "parent"'), '"parent"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'break') && (GiselleCalc('break', '"break"', 2, 0)) && (found = true);
 					(found == false) && (word == 'node') && (GiselleCalc(Dependent('lastWord=="by"', 'nodeType', '*unknown command "size"'), '"node"', 2, 0, '-+')) && (found = true);
-					(found == false) && (word == 'item') && (GiselleCalc(Dependent('lastWord=="by"', 'item', '*unknown command "item"'), '"item"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'html') && (GiselleCalc(Dependent('lastWord=="by"', 'innerHTML', '*unknown command "html"'), '"html"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'script') && (GiselleCalc(Dependent('lastWord=="by"', 'currentScript', '*unknown command "script"'), '"script"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'document') && (GiselleCalc(Dependent('lastWord=="by"', 'document', '*unknown command "document"'), '"document"', 2, 0, '-+')) && (found = true);
