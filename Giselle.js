@@ -154,7 +154,7 @@ export default function Giselle(allCode) {
 					(found == false) && (word == 'element') && (GiselleCalc('\"getElementByName\"', '\"element\"', 2, 0) && DegreeUp()) && (found = true);
 					(found == false) && (word == 'with') && (GiselleCalc(')&&(', 'with', 2, 0)) && (found = true);
 					(found == false) && (word == 'without') && (GiselleCalc(')&&(_$I$F$_=true);(_$I$F$_==false)&&(', 'without', 2, 0)) && (found = true);
-					(found == false) && (word == 'also') && (GiselleCalc(Dependent('currentScope>0', ');(_$I$F$_ = false);(', '*please start a new line in your code, instead of using "also" keyword'), 'also', 2, 0)) && (found = true);
+					(found == false) && (word == 'also') && (GiselleCalc(Dependent('parametersDegree>0', ',' ,Dependent('currentScope>0', ');(_$I$F$_ = false);(', '*please start a new line in your code, instead of using "also" keyword')), 'also', 2, 0)) && (found = true);
 					(found == false) && (word == 'do') && (GiselleCalc(Dependent('lastWord==will', Dependent('parametersDegree==0', '=> {', '*you can not create a function as a parameter. Instead, please define the function in a seperate line in your code, then, call it as a parameter'), '*unknown command gain. You may forgot using "will"'), 'do', 2, 1)) && (found = true);
 					(found == false) && (word == 'is') && (GiselleCalc('', 'is', 2, 0)) && (found = true);
 					(found == false) && (word == 'like') && (GiselleCalc(Dependent('lastWord=="is"', '==', '*unknown command like. You may forgot using "is"'), 'like', 2, 0)) && (found = true);
