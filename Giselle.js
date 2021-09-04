@@ -151,6 +151,8 @@ export default function Giselle(allCode) {
 					(found == false) && (word == 'boolean') && (GiselleCalc(Dependent('lastWord=="as"', '].forEach(_$D$A$T$A$_ => this === _$D$A$T$A$_)', '*unknown command "boolean"'), '"boolean"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'object') && (GiselleCalc(Dependent('lastWord=="as"', '].forEach(_$D$A$T$A$_ => _$D$A$T$A$_)', '*unknown command "object"'), '"object"', 2, 0, '-+')) && (found = true);
 					(found == false) && (word == 'say') && (GiselleCalc('\"alert\"', '\"say\"', 2, 0) && DegreeUp()) && (found = true);
+					(found == false) && (word == 'identifier') && (GiselleCalc('\"getElementByID\"', '\"identifier\"', 2, 0) && DegreeUp()) && (found = true);
+					(found == false) && (word == 'element') && (GiselleCalc('\"getElementByName\"', '\"element\"', 2, 0) && DegreeUp()) && (found = true);
 					(found == false) && (word == 'with') && (GiselleCalc(')&&(', 'with', 2, 0)) && (found = true);
 					(found == false) && (word == 'without') && (GiselleCalc(')&&(_$I$F$_=true);(_$I$F$_==false)&&(', 'without', 2, 0)) && (found = true);
 					(found == false) && (word == 'also') && (GiselleCalc(Dependent('currentScope>0', ');(_$I$F$_ = false);(', '*please start a new line in your code, instead of using "also" keyword'), 'also', 2, 0)) && (found = true);
