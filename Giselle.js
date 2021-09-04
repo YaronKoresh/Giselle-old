@@ -107,8 +107,8 @@ export default function Giselle(allCode) {
 	var regTester = regOpen + regAnySpace + regAssignment + regOr + regActivity + regAnySpace + regCloseOne;
 	var reg = new RegExp('^' + regTester + '$');
   try {
-  	var theDev = false;
-	(var lines = allCode.replace('\n\n', '').replace(/^\n/, '').replace(/\n$/, '').split('\n')) || (var lines = window.document.currentScript.getAttribute("code").replace('\n\n', '').replace(/^\n/, '').replace(/\n$/, '').split('\n'));
+ 	var theDev = false;
+	var lines = (allCode.replace('\n\n', '').replace(/^\n/, '').replace(/\n$/, '').split('\n')) || (window.document.currentScript.getAttribute("code").replace('\n\n', '').replace(/^\n/, '').replace(/\n$/, '').split('\n'));
 		for (i = 0; i < lines.length; i++) {
 			theDev = true;
 			currentMode = innerModes[1];
